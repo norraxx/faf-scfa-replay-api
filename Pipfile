@@ -1,0 +1,6 @@
+[requires]
+python_version = '3.6'
+
+[packages]
+flask = "*"
+replay-parser = {git = "https://github.com/FAForever/faf-scfa-replay-parser.git"}
