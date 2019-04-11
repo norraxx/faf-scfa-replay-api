@@ -11,5 +11,5 @@ if __name__ == '__main__':
     api_app.run(
         debug=True,
         host="0.0.0.0",
-        port=environ.get("REPLAY_API_PORT", 5000),
+        port=environ.get("REPLAY_API_PORT", 13666),
     )

@@ -9,13 +9,10 @@
             </ul>
             {% endif %}
         {% endwith %}
-        <form method="post" enctype="multipart/form-data">
+        <form action="/parse" method="post" enctype="multipart/form-data">
             <input type="file" name="replay" /> <br />
             <input type="submit" />
             <br />
-            <script>
-            data = {{ data|tojson }}
-            </script>
         </form>
     </body>
 </html>
