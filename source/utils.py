@@ -3,6 +3,8 @@ import json
 import zlib
 from io import StringIO
 
+__all__ = ("get_scfa_replay_by_data", "ByteLessJSONEncoder")
+
 
 def get_scfa_replay_by_data(data: bytes):
     """
@@ -21,3 +23,11 @@ def get_scfa_replay_by_data(data: bytes):
         pass
 
     return data
+
+
+class ByteLessJSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, (bytes, bytearray)):
+            return [elem for elem in o]
+
+        return super(ByteLessJSONEncoder, self).default(o)
