@@ -1,0 +1,80 @@
+/* colors */
+.light-gray {color: #ddd}
+.blue {color: #337ab7}
+.green {color: #5cb85c}
+.yellow {color: #f0ad4e}
+.red {color: #d9534f}
+
+body {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 8px;
+    line-height: 1em;
+    color: #000000C0;
+    font-size: 16px;
+    min-height: 100vh;
+}
+
+.block {
+    border: 1px solid #dddddd90;
+    border-radius: 5px;
+    margin: 16px 0;
+    padding: 8px 0;
+    height: calc(100% - 16px);
+}
+
+/* box colors */
+.blue-line {
+    border-color: #337ab790;
+    background: #337ab705;
+}
+.red-line {
+    border-color: #d9534f90;
+    background: #d9534f05;
+}
+.yellow-line {
+    border-color: #f0ad4e90;
+    background: #f0ad4e05;
+}
+.green-line {
+    border-color: #5cb85c90;
+    background: #5cb85c05;
+}
+
+/* input and selectbox colors */
+.blue-line input, .blue-line select {
+    border-color: #337ab790;
+}
+.red-line input, .red-line select {
+    border-color: #d9534f90;
+}
+.yellow-line input, .yellow-line select {
+    border-color: #f0ad4e90;
+}
+.green-line input, .green-line select {
+    border-color: #5cb85c90;
+}
+
+/* Link colors */
+.blue-line a {
+    color: #204f77;
+}
+.red-line a {
+    color: #963a37;
+}
+.yellow-line a {
+    color: #d39e00;
+}
+.green-line a {
+    color: #1e7e34;
+}
+
+#replay-header {
+    height: 200px;
+    overflow-y: auto;
+}
+
+#replay-body {
+    height: 60vh;
+    overflow-y: auto;
+}

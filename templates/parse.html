@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap/bootstrap.css") }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap/bootstrap-grid.css") }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap/bootstrap-reboot.css") }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename="css/main.css") }}" />
+
+        <title>FAF and SCFA replay parser and API</title>
+    </head>
+    <body id="content">
+        <div class="container">
+            {% block input %}
+                <div class="row block blue-line">
+                    <form id="replay-upload" action="/parse" method="post" enctype="multipart/form-data" class="col-12">
+                        Replay: <input type="file" name="replay" id="replay-file" />
+                        <input type="submit" value="Parse" />
+                    </form>
+                </div>
+            {% endblock %}
+            {% block navigation %}
+                <div class="row block red-line">
+                    <div class="col-12">
+                        <a id="replay-step-left" href="#">&lt; &lt; &lt; &lt; &lt;</a>
+                        <input type="number" id="replay-tick" placeholder="Tick" />
+                        Max Tick: <span id="replay-max-tick"></span>
+                        <a id="replay-step-right" href="#">&gt; &gt; &gt; &gt; &gt;</a>
+                    </div>
+                </div>
+            {% endblock %}
+            <textarea class="row block yellow-line col-12" id="replay-header"
+                placeholder="Header content will be here"
+            ></textarea>
+            <textarea class="row block green-line col-12" id="replay-body"
+                placeholder="Tick content will be here"
+            ></textarea>
+        </div>
+
+        <script src="{{ url_for('static', filename='js/axios.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    </body>
+</html>

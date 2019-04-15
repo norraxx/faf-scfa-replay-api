@@ -21,7 +21,7 @@ def process_file():
 
 @api_app.route("/", strict_slashes=False, methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    return render_template("parse.html")
 
 
 @api_app.route("/parse", strict_slashes=False, methods=["GET", "POST"])
