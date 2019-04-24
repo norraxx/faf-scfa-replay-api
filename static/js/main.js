@@ -1,16 +1,25 @@
 document.replayData = null;
-document.tick = 0;
+document.replayTick = 0;
+document.replayFilter = [];
 
 function renderHeader() {
+    if (!document.replayData || !document.replayData.hasOwnProperty("body")) {
+        return;
+    }
+
     document.getElementById("replay-header").innerHTML = JSON.stringify(
         document.replayData['header'], null, 4)
 }
 
 function renderBody() {
+    if (!document.replayData || !document.replayData.hasOwnProperty("body")) {
+        return;
+    }
     document.getElementById("replay-body").innerHTML = JSON.stringify(
-        document.replayData['body'][document.tick], null, 4);
-    document.getElementById("replay-tick").value = document.tick;
+        document.replayData['body'][document.replayTick], null, 4);
+    document.getElementById("replay-tick").value = document.replayTick;
     document.getElementById("replay-max-tick").innerText = document.replayData['body'].length - 1;
+    document.getElementById("replay-desync-ticks").innerText = document.replayData['desync_ticks'].join(", ");
 }
 
 function render() {
@@ -30,13 +39,55 @@ function loadReplay(e) {
         formData,
         {headers: {"Content-Type": "multipart/form-data"}}
     ).then(response => {
-        document.replayData = response.data;
-        document.tick = 0;
+        if (response.data.hasOwnProperty("body")) {
+            document.replayData = response.data;
+            document.replayTick = 0;
+        } else {
+            alert("Choose the *.scfareplay or *.fafreplay");
+        }
         render();
-    }).catch(() => {
+    }).catch((e) => {
+        console.log(e);
         alert("something goes wrong!");
     });
     return false;
+}
+
+function getNextTickWithFilter(lookWhere) {
+    for (let i = document.replayTick + lookWhere; i >= 0 && i < document.replayData['body'].length; i += lookWhere) {
+        let tick = document.replayData['body'][i];
+        let tickStr = JSON.stringify(tick, null, 4); // dirty ugly hack :-)
+        for (let filter of document.replayFilter) {
+            if (tickStr.indexOf("type\": \"" + filter) !== -1) {
+                return i;
+            }
+        }
+    }
+
+    alert("There is no " + document.replayFilter.join(","));
+
+    return document.replayTick;
+}
+
+function onTickChangeListener(e) {
+    e.preventDefault();
+    document.replayTick = parseInt(e.target.value);
+    renderBody();
+}
+
+function onFilterChangeListener(e) {
+    e.preventDefault();
+    document.replayFilter = [];
+    for (let option of e.target.options) {
+        if (option.selected) {
+            document.replayFilter.push(option.value);
+        }
+    }
+
+    if (document.replayData && document.replayFilter.length > 0) {
+        document.replayTick = getNextTickWithFilter(1);
+    }
+    renderBody();
 }
 
 function onStepChange(step) {
@@ -44,23 +95,22 @@ function onStepChange(step) {
         e.preventDefault();
         e.stopPropagation();
         if (!document.replayData ||
-            document.tick + step < 0 ||
-            document.tick + step >= document.replayData['body'].length) {
+            document.replayTick + step < 0 ||
+            document.replayTick + step >= document.replayData['body'].length) {
             return;
         }
 
-        document.tick += step;
+        if (document.replayFilter.length > 0) {
+            document.replayTick = getNextTickWithFilter(step);
+        } else
+        {
+            document.replayTick += step;
+        }
+
         renderBody();
         return false;
     }
 }
-
-function onChangeListener(e) {
-    e.preventDefault();
-    document.tick = parseInt(e.target.value);
-    renderBody();
-}
-
 
 window.onkeyup = function(e) {
    let key = e.keyCode ? e.keyCode : e.which;
@@ -80,6 +130,7 @@ window.onkeyup = function(e) {
     document.getElementById("replay-upload").addEventListener("submit",  loadReplay);
     document.getElementById("replay-step-left").addEventListener("click",  onStepChange(-1));
     document.getElementById("replay-step-right").addEventListener("click",  onStepChange(1));
-    document.getElementById("replay-tick").addEventListener("change", onChangeListener);
+    document.getElementById("replay-tick").addEventListener("change", onTickChangeListener);
+    document.getElementById("replay-filter").addEventListener("change", onFilterChangeListener);
 })();
 

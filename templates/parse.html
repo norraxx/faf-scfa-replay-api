@@ -24,11 +24,50 @@
             {% endblock %}
             {% block navigation %}
                 <div class="row block red-line">
-                    <div class="col-12">
+                    <div class="col-6">
                         <a id="replay-step-left" href="#">&lt; &lt; &lt; &lt; &lt;</a>
                         <input type="number" id="replay-tick" placeholder="Tick" />
+                        <a id="replay-step-right" href="#">&gt; &gt; &gt; &gt; &gt;</a><br />
+                        <hr />
                         Max Tick: <span id="replay-max-tick"></span>
-                        <a id="replay-step-right" href="#">&gt; &gt; &gt; &gt; &gt;</a>
+                        <hr />
+                        Desync Ticks: <span id="replay-desync-ticks"></span>
+
+                    </div>
+                    <div class="col-6">
+                        <select id="replay-filter" multiple class="col-12">
+                            <optgroup label="Often">
+                                <option value="advance">Advance</option>
+                                <option value="set_command_source">Set command source</option>
+                                <option value="command_source_terminated">Command source terminated</option>
+                                <option value="verify_checksum">Verify checksum</option>
+                            </optgroup>
+                            <optgroup label="Normal">
+                                <option value="issue">Issue</option>
+                                <option value="factory_issue">Factory issue</option>
+                                <option value="create_unit">Create unit</option>
+                                <option value="create_prop">Create property</option>
+                                <option value="single_step">Single step</option>
+                                <option value="command_count_increase">Command count increase</option>
+                                <option value="command_count_decrease">Command count decrease</option>
+                                <option value="set_command_target">Set command target</option>
+                                <option value="set_command_type">Set command type</option>
+                                <option value="set_command_cells">Set command cells</option>
+                                <option value="lua_sim_callback">LUA SIM Callback</option>
+                            </optgroup>
+                            <optgroup label="Rare">
+                                <option value="request_pause">Request pause</option>
+                                <option value="resume">Resume</option>
+                                <option value="destroy_entity">Destroy unit</option>
+                                <option value="warp_entity">Warp unit</option>
+                                <option value="process_info_pair">Process info pair</option>
+                                <option value="set_command_cells">Set command cells</option>
+                                <option value="remove_from_queue">Remove from queue</option>
+                                <option value="debug_command">Debug command</option>
+                                <option value="execute_lua_in_sim">Execute LUA in SIM</option>
+                                <option value="end_game">End game</option>
+                            </optgroup>
+                        </select>
                     </div>
                 </div>
             {% endblock %}

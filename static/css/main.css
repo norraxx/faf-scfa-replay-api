@@ -75,6 +75,10 @@ body {
 }
 
 #replay-body {
-    height: 60vh;
+    height: 35vh;
     overflow-y: auto;
+}
+
+#replay-filter {
+    height: 300px;
 }
