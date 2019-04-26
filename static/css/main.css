@@ -78,6 +78,10 @@ body {
     height: 35vh;
     overflow-y: auto;
 }
+#replay-frame {
+    height: 100vh;
+    overflow-y: auto;
+}
 
 #replay-filter {
     height: 300px;

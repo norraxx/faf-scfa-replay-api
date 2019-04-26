@@ -17,6 +17,28 @@ function renderBody() {
     }
     document.getElementById("replay-body").innerHTML = JSON.stringify(
         document.replayData['body'][document.replayTick], null, 4);
+		
+	//show frame of ticks if frameSize is set	
+	var frameSize = document.getElementById("replay-frame-number").value;
+if(typeof frameSize !== 'undefined' && frameSize != 0){
+		var frameStart = 0;
+		var frameBody = '';
+		var frameOverhead = 10;
+		if(frameSize < replayTick){
+			frameStart = replayTick - frameSize;
+		} else {
+			frameStart = replayTick;
+		}
+		for(var i1 = frameStart; i1++; i1 <= replayTick + frameOverhead || i1 <= document.replayData['body'].length - 1){
+			frameBody += "Tick #'+i1+'\n #";
+			frameBody +=JSON.stringify(
+			document.replayData['body'][i1], null, 4);
+			frameBody += "\n\n";
+		}
+		//show frame on screen
+		document.getElementById("replay-frame").innerHTML = frameBody;
+	}
+	
     document.getElementById("replay-tick").value = document.replayTick;
     document.getElementById("replay-max-tick").innerText = document.replayData['body'].length - 1;
     document.getElementById("replay-desync-ticks").innerText = document.replayData['desync_ticks'].join(", ");
@@ -36,6 +58,7 @@ function loadReplay(e) {
 
     axios.post(
         e.target.getAttribute("action"),
+		crossDomain: true,
         formData,
         {headers: {"Content-Type": "multipart/form-data"}}
     ).then(response => {
