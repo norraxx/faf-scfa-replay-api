@@ -26,10 +26,12 @@
                 <div class="row block red-line">
                     <div class="col-6">
                         <a id="replay-step-left" href="#">&lt; &lt; &lt; &lt; &lt;</a>
-                        <input type="number" id="replay-tick" placeholder="Tick" />
+                        <input type="number" id="replay-tick" placeholder="Tick" min="0" />
                         <a id="replay-step-right" href="#">&gt; &gt; &gt; &gt; &gt;</a><br />
                         <hr />
-                        <input type="number" id="replay-ticks-count" placeholder="Frame - number of ticks" value="0" />
+                        Number of ticks:
+                        <input type="number" id="replay-ticks-count"
+                               placeholder="Frame - number of ticks" value="0" min="0" />
                         <hr />
                         Max Tick: <span id="replay-max-tick"></span>
                         <hr />
