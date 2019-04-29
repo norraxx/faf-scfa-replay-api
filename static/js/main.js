@@ -1,6 +1,7 @@
 document.replayData = null;
 document.replayTick = 0;
 document.replayFilter = [];
+document.replayTicksCount = 0;
 
 function renderHeader() {
     if (!document.replayData || !document.replayData.hasOwnProperty("body")) {
@@ -15,11 +16,22 @@ function renderBody() {
     if (!document.replayData || !document.replayData.hasOwnProperty("body")) {
         return;
     }
-    document.getElementById("replay-body").innerHTML = JSON.stringify(
-        document.replayData['body'][document.replayTick], null, 4);
+    renderReplayContent();
     document.getElementById("replay-tick").value = document.replayTick;
     document.getElementById("replay-max-tick").innerText = document.replayData['body'].length - 1;
     document.getElementById("replay-desync-ticks").innerText = document.replayData['desync_ticks'].join(", ");
+}
+
+function renderReplayContent() {
+    let ticks = [];
+    let around = Math.abs(parseInt(document.getElementById("replay-ticks-count").value) || 0);
+    for(let i = Math.max(document.replayTick - around, 0);
+        i <= document.replayTick + around && i < document.replayData['body'].length;
+        i++
+    ) {
+        ticks.push(i, document.replayData['body']["" + i]);
+    }
+    document.getElementById("replay-body").innerHTML = JSON.stringify(ticks, null, 4);
 }
 
 function render() {
@@ -71,7 +83,7 @@ function getNextTickWithFilter(lookWhere) {
 
 function onTickChangeListener(e) {
     e.preventDefault();
-    document.replayTick = parseInt(e.target.value);
+    document.replayTick = parseInt(document.getElementById("replay-tick").value);
     renderBody();
 }
 
@@ -132,5 +144,6 @@ window.onkeyup = function(e) {
     document.getElementById("replay-step-right").addEventListener("click",  onStepChange(1));
     document.getElementById("replay-tick").addEventListener("change", onTickChangeListener);
     document.getElementById("replay-filter").addEventListener("change", onFilterChangeListener);
+    document.getElementById("replay-ticks-count").addEventListener("change", onTickChangeListener);
 })();
 

@@ -75,7 +75,7 @@ body {
 }
 
 #replay-body {
-    height: 35vh;
+    height: 100vh;
     overflow-y: auto;
 }
 
