@@ -54,6 +54,11 @@ function loadReplay(e) {
         if (response.data.hasOwnProperty("body")) {
             document.replayData = response.data;
             document.replayTick = 0;
+        }
+        else if (response.data) {
+            let data = response.data.split("-Infinity").join('"-Inf8nity"');
+            document.replayData = JSON.parse(data);
+            document.replayTick = 0;
         } else {
             alert("Choose the *.scfareplay or *.fafreplay");
         }
