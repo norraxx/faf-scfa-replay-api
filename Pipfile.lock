@@ -80,7 +80,7 @@
         },
         "replay-parser": {
             "git": "https://github.com/FAForever/faf-scfa-replay-parser.git",
-            "ref": "5bc828345f3cbe2ede24068f1bc381107b4bfc36"
+            "ref": "9d0cb7cb4bb0cf6d8be44e5c1ea4bc357aa9a0c5"
         },
         "werkzeug": {
             "hashes": [
